@@ -13,18 +13,32 @@ find_package(Qt6 COMPONENTS
         Gui
         Widgets
         Sql
+        WebChannel
+        WebEngineCore
+        WebEngineWidgets
+        WebView
         REQUIRED)
 
 add_executable(BookMarket
-        src/ui/BookMarket.ui
-        src/ui/BookMarket.h
+        src/main.cpp
+        src/dao/DataBaseBean.cpp
+        src/dao/DataBaseBean.h
+        src/dao/BookDao.cpp
+        src/dao/BookDao.h
+        src/model/Book.h
+        src/Test.h
         src/ui/BookMarket.cpp
-        src/main.cpp src/dao/DataBaseBean.cpp src/dao/DataBaseBean.h src/dao/BookDao.cpp src/dao/BookDao.h src/model/Book.h)
+        src/ui/BookMarket.h
+        src/ui/BookMarket.ui)
 target_link_libraries(BookMarket
         Qt::Core
         Qt::Gui
         Qt::Widgets
         Qt::Sql
+        Qt::WebChannel
+        Qt::WebEngineCore
+        Qt::WebEngineWidgets
+        Qt::WebView
         )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
@@ -48,7 +62,7 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
     endif ()
-    foreach (QT_LIB Core Gui Widgets)
+    foreach (QT_LIB Core Gui Widgets Sql WebChannel WebEngineCore WebEngineWidgets WebView)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy
                 "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"

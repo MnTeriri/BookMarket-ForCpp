@@ -1,28 +1,25 @@
-<UI version="4.0" >
- <class>BookMarketClass</class>
- <widget class="QMainWindow" name="BookMarketClass" >
-  <property name="objectName" >
-   <string notr="true">BookMarketClass</string>
-  </property>
-  <property name="geometry" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BookMarket</class>
+ <widget class="QWidget" name="BookMarket">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>BookMarket</string>
-  </property>  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
- <resources>
-   <include location="BookMarket.qrc"/>
- </resources>
+ <resources/>
  <connections/>
-</UI>
+</ui>

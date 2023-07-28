@@ -1,14 +1,10 @@
 #include <QApplication>
-#include <QDebug>
-#include "dao/BookDao.h"
+#include <QVBoxLayout>
 #include "ui/BookMarket.h"
 
 int main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
-//    BookMarket bookMarket;
-//    bookMarket.show();
-//    return QApplication::exec();
-
-
-    return 0;
+    QApplication app(argc, argv);
+    BookMarket bookMarket;
+    bookMarket.show();
+    return QApplication::exec();
 }

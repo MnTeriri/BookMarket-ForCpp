@@ -11,54 +11,36 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_BookMarketClass
+class Ui_BookMarket
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
-    QWidget *centralWidget;
-    QStatusBar *statusBar;
 
-    void setupUi(QMainWindow *BookMarketClass)
+    void setupUi(QWidget *BookMarket)
     {
-        if (BookMarketClass->objectName().isEmpty())
-            BookMarketClass->setObjectName("BookMarketClass");
-        BookMarketClass->resize(600, 400);
-        menuBar = new QMenuBar(BookMarketClass);
-        menuBar->setObjectName("menuBar");
-        BookMarketClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(BookMarketClass);
-        mainToolBar->setObjectName("mainToolBar");
-        BookMarketClass->addToolBar(mainToolBar);
-        centralWidget = new QWidget(BookMarketClass);
-        centralWidget->setObjectName("centralWidget");
-        BookMarketClass->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(BookMarketClass);
-        statusBar->setObjectName("statusBar");
-        BookMarketClass->setStatusBar(statusBar);
+        if (BookMarket->objectName().isEmpty())
+            BookMarket->setObjectName("BookMarket");
+        BookMarket->resize(800, 500);
+        BookMarket->setLayoutDirection(Qt::LeftToRight);
+        BookMarket->setAutoFillBackground(false);
 
-        retranslateUi(BookMarketClass);
+        retranslateUi(BookMarket);
 
-        QMetaObject::connectSlotsByName(BookMarketClass);
+        QMetaObject::connectSlotsByName(BookMarket);
     } // setupUi
 
-    void retranslateUi(QMainWindow *BookMarketClass)
+    void retranslateUi(QWidget *BookMarket)
     {
-        BookMarketClass->setWindowTitle(QCoreApplication::translate("BookMarketClass", "BookMarket", nullptr));
+        BookMarket->setWindowTitle(QCoreApplication::translate("BookMarket", "BookMarket", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class BookMarketClass: public Ui_BookMarketClass {};
+    class BookMarket: public Ui_BookMarket {};
 } // namespace Ui
 
 QT_END_NAMESPACE

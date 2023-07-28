@@ -1,14 +1,19 @@
-#pragma once
+#ifndef BOOKMARKET_BOOKMARKET_H
+#define BOOKMARKET_BOOKMARKET_H
 
-#include <QtWidgets/QMainWindow>
+#include <QWidget>
+#include <QWebEngineView>
 #include "ui_BookMarket.h"
 
-class BookMarket : public QMainWindow{
+class BookMarket : public QWidget {
     Q_OBJECT
 public:
-    BookMarket(QWidget *parent = nullptr);
-    ~BookMarket();
+    explicit BookMarket(QWidget *parent = nullptr);
+    ~BookMarket() override;
 
 private:
-    Ui::BookMarketClass ui;
+    Ui::BookMarket ui;
 };
+
+
+#endif //BOOKMARKET_BOOKMARKET_H
