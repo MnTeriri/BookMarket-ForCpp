@@ -1,4 +1,7 @@
 #include <QApplication>
+#include <QWidget>
+#include <QWebEngineView>
+#include <QWebChannel>
 #include <QVBoxLayout>
 #include "ui/BookMarket.h"
 
