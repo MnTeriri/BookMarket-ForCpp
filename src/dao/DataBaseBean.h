@@ -10,8 +10,9 @@ private:
     static QString dataBaseName;
     static QString user;
     static QString password;
+    static QSqlQuery *query;
 public:
-    static QSqlQuery getConnection();
+    static QSqlQuery *getConnection();
 };
 
 #endif //BOOKMARKET_DATABASEBEAN_H
