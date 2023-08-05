@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QString>
+#include <QJsonValue>
+#include <QJsonObject>
 #include <QDateTime>
 #include <QByteArray>
 #include <QVariant>
@@ -10,6 +12,20 @@
 
 class Book : public QObject {
 Q_OBJECT
+    Q_PROPERTY(int id READ getId WRITE setId)
+    Q_PROPERTY(QString bid READ getBid WRITE setBid)
+    Q_PROPERTY(int cid READ getCid WRITE setCid)
+    Q_PROPERTY(QString cname READ getCname WRITE setCname)
+    Q_PROPERTY(QString bname READ getBname WRITE setBname)
+    Q_PROPERTY(QString author READ getAuthor WRITE setAuthor)
+    Q_PROPERTY(QString publisher READ getPublisher WRITE setPublisher)
+    Q_PROPERTY(QDateTime publish_time READ getPublishTime WRITE setPublishTime)
+    Q_PROPERTY(QByteArray image READ getImage WRITE setImage)
+    Q_PROPERTY(double price READ getPrice WRITE setPrice)
+    Q_PROPERTY(double discount READ getDiscount WRITE setDiscount)
+    Q_PROPERTY(int count READ getCount WRITE setCount)
+    Q_PROPERTY(QString description READ getDescription WRITE setDescription)
+    Q_PROPERTY(int status READ getStatus WRITE setStatus)
 
 private:
     int id;
@@ -19,7 +35,7 @@ private:
     QString bname;//图书名称
     QString author;//作者名称
     QString publisher;//出版社名称
-    QDateTime publishTime;//出版时间
+    QDateTime publish_time;//出版时间
     QByteArray image;
     QString imageString;//书籍图片
     double price;//价格
@@ -29,7 +45,7 @@ private:
     int status;//图书状态 0正常、1缺货、2下架
 
 public:
-    Book(QObject *parent = nullptr) : QObject(parent) {}
+    Q_INVOKABLE explicit Book(QObject *parent = nullptr) : QObject(parent) {}
 
     int getId() const {
         return id;
@@ -88,11 +104,11 @@ public:
     }
 
     const QDateTime &getPublishTime() const {
-        return publishTime;
+        return publish_time;
     }
 
     void setPublishTime(const QDateTime &publishTime) {
-        Book::publishTime = publishTime;
+        Book::publish_time = publishTime;
     }
 
     const QByteArray &getImage() const {
@@ -154,7 +170,7 @@ public:
     friend QDebug &operator<<(QDebug os, const Book &book) {
         os << (QObject *) &book << " id: " << book.id << " bid: " << book.bid << " cid: " << book.cid
            << " cname: " << book.cname << " bname: " << book.bname << " author: " << book.author << " publisher: "
-           << book.publisher << " publishTime: " << book.publishTime << " image: " << book.image << " imageString: "
+           << book.publisher << " publishTime: " << book.publish_time << " image: " << book.image << " imageString: "
            << book.imageString << " price: " << book.price << " discount: " << book.discount << " count: " << book.count
            << " description: " << book.description << " status: " << book.status;
         return os;
