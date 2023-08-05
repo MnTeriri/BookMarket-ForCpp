@@ -23,7 +23,8 @@ public:
     {
         if (BookMarket->objectName().isEmpty())
             BookMarket->setObjectName("BookMarket");
-        BookMarket->resize(800, 500);
+        BookMarket->resize(1600, 850);
+        BookMarket->setMinimumSize(QSize(1600, 850));
         BookMarket->setLayoutDirection(Qt::LeftToRight);
         BookMarket->setAutoFillBackground(false);
 
