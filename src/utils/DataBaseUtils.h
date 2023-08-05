@@ -34,7 +34,7 @@ public:
         }
         query->exec();
         QStringList headList;//获取sql查询表头
-        QSqlRecord sqlRecord(query->record());
+        QSqlRecord sqlRecord = query->record();
         for (int i = 0; i < sqlRecord.count(); i++) {
             headList << sqlRecord.fieldName(i);
         }
