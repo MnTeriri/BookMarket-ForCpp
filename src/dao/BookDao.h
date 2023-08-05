@@ -7,10 +7,13 @@
 
 class BookDao {
 public:
-    QVector<Book*> getBookList(QString bname, int cid, int page, int count);
+
+    QVector<Book *> getBookList(QString bname, int page, int count);
+    int getRecordsTotal();
+    int getRecordsFiltered(QString bname);
 
 private:
-    QVector<Book*> executeSearch(QSqlQuery query);
+    QVector<Book *> executeSearch(QSqlQuery *query);
 };
 
 
