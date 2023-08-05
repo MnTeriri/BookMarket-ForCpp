@@ -29,7 +29,11 @@ add_executable(BookMarket
         src/Test.h
         src/ui/BookMarket.cpp
         src/ui/BookMarket.h
-        src/ui/BookMarket.ui)
+        src/ui/BookMarket.ui
+        src/service/BookService.cpp
+        src/service/BookService.h
+        src/utils/JSON.h
+)
 target_link_libraries(BookMarket
         Qt::Core
         Qt::Gui
