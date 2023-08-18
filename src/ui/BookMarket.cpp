@@ -5,6 +5,8 @@
 #include "ui_BookMarket.h"
 #include "../service/BookService.h"
 #include "../Test.h"
+#include "../service/ProxyService.h"
+#include "../model/Address.h"
 
 BookMarket::BookMarket(QWidget *parent) : QWidget(parent) {
     ui.setupUi(this);
@@ -18,9 +20,13 @@ BookMarket::BookMarket(QWidget *parent) : QWidget(parent) {
     layout->addWidget(webEngineView);
 
     webChannel->registerObject("bookService",new BookService());//将自定义对象注册到QWebChannel中
+    webChannel->registerObject("proxyService",new ProxyService());//将自定义对象注册到QWebChannel中
 
     webEngineView->page()->setWebChannel(webChannel);;//给WebEngineView添加WebChannel
-    webEngineView->setUrl(QUrl("F:/Code/WebStorm/bookmarket/dist/index.html"));
+    webEngineView->setUrl(QUrl("F:/Code/WebStorm/untitled/dist/index.html"));
+
+    qRegisterMetaType<BookService>("BookService");
+    qRegisterMetaType<Address>("Address");
 }
 
 BookMarket::~BookMarket() {
