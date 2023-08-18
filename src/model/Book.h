@@ -20,7 +20,7 @@ Q_OBJECT
     Q_PROPERTY(QString author READ getAuthor WRITE setAuthor)
     Q_PROPERTY(QString publisher READ getPublisher WRITE setPublisher)
     Q_PROPERTY(QDateTime publish_time READ getPublishTime WRITE setPublishTime)
-    Q_PROPERTY(QByteArray image READ getImage WRITE setImage)
+    //Q_PROPERTY(QByteArray image READ getImage WRITE setImage)
     Q_PROPERTY(double price READ getPrice WRITE setPrice)
     Q_PROPERTY(double discount READ getDiscount WRITE setDiscount)
     Q_PROPERTY(int count READ getCount WRITE setCount)
