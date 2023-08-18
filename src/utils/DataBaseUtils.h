@@ -5,6 +5,7 @@
 #include <QSqlResult>
 #include <QSqlRecord>
 #include <QDebug>
+#include "../dao/DataBaseBean.h"
 
 class DataBaseUtils {
 public:
