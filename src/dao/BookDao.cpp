@@ -2,6 +2,14 @@
 #include "DataBaseBean.h"
 #include "../utils/DataBaseUtils.h"
 
+Book *BookDao::search(QString bid) {
+    QString sql ="SELECT Book.id, bid, cid,cname, bname, author, publisher, publish_time, image, price, discount, count, description, status "
+                 "FROM Book INNER JOIN Category ON Book.cid = Category.id "
+                 "WHERE bid=?";
+    QVector<Book *> list = DataBaseUtils::search<Book>(sql, bid);
+    return list[0];
+}
+
 QVector<Book *> BookDao::getBookList(QString bname, int page, int count) {
     QString sql = "SELECT Book.id, bid, cid,cname, bname, author, publisher, publish_time, image, price, discount, count, description, status "
                   "FROM Book INNER JOIN Category ON Book.cid = Category.id "
@@ -20,27 +28,24 @@ int BookDao::getRecordsFiltered(QString bname) {
     return result.toInt();
 }
 
-QVector<Book *> BookDao::executeSearch(QSqlQuery *query) {
-    QVector<Book *> list;
-    while (query->next()) {
-        Book *book = new Book;
-        book->setId(query->value("id").toInt());
-        book->setBid(query->value("bid").toString());
-        book->setCid(query->value("cid").toInt());
-        book->setBname(query->value("bname").toString());
-        book->setAuthor(query->value("author").toString());
-        book->setPublisher(query->value("publisher").toString());
-        book->setPublishTime(query->value("publish_time").toDateTime());
-        book->setImage(query->value("image").toByteArray());
-        book->setPrice(query->value("price").toDouble());
-        book->setDiscount(query->value("discount").toDouble());
-        book->setCount(query->value("count").toInt());
-        book->setDescription(query->value("description").toString());
-        book->setStatus(query->value("status").toInt());
-        list.push_back(book);
-    }
-    return list;
-}
-
-
-
+//QVector<Book *> BookDao::executeSearch(QSqlQuery *query) {
+//    QVector<Book *> list;
+//    while (query->next()) {
+//        Book *book = new Book;
+//        book->setId(query->value("id").toInt());
+//        book->setBid(query->value("bid").toString());
+//        book->setCid(query->value("cid").toInt());
+//        book->setBname(query->value("bname").toString());
+//        book->setAuthor(query->value("author").toString());
+//        book->setPublisher(query->value("publisher").toString());
+//        book->setPublishTime(query->value("publish_time").toDateTime());
+//        book->setImage(query->value("image").toByteArray());
+//        book->setPrice(query->value("price").toDouble());
+//        book->setDiscount(query->value("discount").toDouble());
+//        book->setCount(query->value("count").toInt());
+//        book->setDescription(query->value("description").toString());
+//        book->setStatus(query->value("status").toInt());
+//        list.push_back(book);
+//    }
+//    return list;
+//}
