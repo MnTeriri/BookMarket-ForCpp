@@ -155,3 +155,103 @@ public:
 * 必须继承QObject，并加上Q_Object宏
 
 6. 调用webChannel->registerObject("bookService",new BookService());将自定义对象注册到QWebChannel中
+
+### 2023/8/18
+* 在传统Web项目当中，我们经常使用比如jQuery或者Vue的axios来与后端异步通信，语法很简便，代码如下：
+~~~JavaScript
+$.ajax({url: '', method: '', data: {}}).then(function (response) {
+    //处理结果
+});
+
+proxy.$axios.post(url, 发送参数, ...}).then(response => {
+    //处理结果
+})
+~~~
+* 当我们使用QWebChannel后，也可与Qt C++代码交互，代码如下：
+~~~JavaScript
+new QWebChannel(qt.webChannelTransport, function (channel) {
+    let cppObj = channel.objects.cppObj;
+    cppObj.你要使用的函数名(对应函数参数,function (response){
+        //处理结果
+    });
+});
+~~~
+* 也比较简便，但有个问题，当一个界面需要和多个QWebChannel注册对象交互时，就需要这样写了
+~~~JavaScript
+new QWebChannel(qt.webChannelTransport, function (channel) {
+    let cppObj1 = channel.objects.cppObj1;
+    let cppObj2 = channel.objects.cppObj2;
+    let cppObj3 = channel.objects.cppObj3;
+    //...
+    cppObj1.你要使用的函数名(对应函数参数,function (response){
+        //处理结果
+    });
+    cppObj2.你要使用的函数名(对应函数参数,function (response){
+        //处理结果
+    });
+    cppObj3.你要使用的函数名(对应函数参数,function (response){
+        //处理结果
+    });
+    //...
+});
+~~~
+* 不如传统Web的jQuery和axios简洁，并且需要注册多个QWebChannel对象，麻烦。
+  所以在这里使用”代理模式“（不算是严格的代理模式），借助Qt反射和代理模式的思想，简化该步骤，使其变为如下形式
+~~~JavaScript
+new QWebChannel(qt.webChannelTransport, function (channel) {
+    let proxyService = channel.objects.proxyService;
+    proxyService.executeService({class: "对应执行函数的类名", method: "执行函数的函数名",函数参数...},function (response){
+        //处理结果
+    });
+});
+~~~
+* ProxyService代码如下：
+~~~C++
+//定义
+class ProxyService : public QObject {
+Q_OBJECT
+public:
+    explicit ProxyService(QObject *parent = nullptr);
+public slots:
+    QVariant executeService(QJsonObject param);
+};
+
+//实现
+ProxyService::ProxyService(QObject *parent) : QObject(parent) {}
+
+QVariant ProxyService::executeService(QJsonObject param) {
+    QString className = param["class"].toString();//执行的类
+    QString methodName = param["method"].toString();//执行的函数名
+    QMetaType metaType = QMetaType::fromName(QByteArrayView(className.toUtf8()));//获取代理类的元类型
+    QMetaObject metaObject = *metaType.metaObject();//获取代理类的元数据
+    QObject *object = metaObject.newInstance();//创建对象
+    QVariant result;
+    QMetaObject::invokeMethod(object, methodName.toUtf8().constData(),
+                              Q_RETURN_ARG(QVariant, result),
+                              Q_ARG(QJsonObject, param));//执行函数
+    delete object;
+    return result;
+}
+~~~
+* 这样就可以借助Qt反射帮我们执行函数了，但需要对被反射对象进行注册，修改BookService如下（其实就是加了个Q_INVOKABLE，和注册类型）
+~~~C++
+class BookService: public QObject{
+    Q_OBJECT
+public:
+    Q_INVOKABLE explicit BookService(QObject *parent = nullptr);
+private:
+    BookDao bookDao;
+public slots:
+    Q_INVOKABLE QJsonObject getBookList(QString bname, int page, int count);//老方法，需要声明为槽函数
+    
+public:
+    Q_INVOKABLE QVariant getBookList(QJsonObject param);//新方法
+};
+Q_DECLARE_METATYPE(BookService)//注册类型
+
+qRegisterMetaType<BookService>("BookService");//主函数或其他位置加入，注册类型
+~~~
+* 这样就只需要注册一个QWebChannel对象，就能完成所有操作了
+~~~C++
+webChannel->registerObject("proxyService",new ProxyService());//将自定义对象注册到QWebChannel中，注册一次即可
+~~~
