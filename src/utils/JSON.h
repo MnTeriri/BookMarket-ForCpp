@@ -30,7 +30,7 @@ public:
         QJsonObject qJsonObject;
         QMetaType metaType = object.metaType();//获取QVariant存储数据的QMetaType
         QMetaObject metaObject = *metaType.metaObject();//根据QMetaType对象就能获取自定义类的QMetaObject对象了
-        qDebug() << metaObject.className();
+        //qDebug() << metaObject.className();
         for (int i = metaObject.propertyOffset(); i < metaObject.propertyCount(); i++) {
             QMetaProperty property = metaObject.property(i);//获取属性名称
             QVariant propertyValue = property.read(object.value<QObject *>());//获取属性值
@@ -54,7 +54,7 @@ public:
     static QJsonObject toJSONObject(QObject *object) {
         QJsonObject qJsonObject;
         QMetaObject metaObject = *object->metaObject();
-        qDebug() << metaObject.className();
+        //qDebug() << metaObject.className();
         for (int i = metaObject.propertyOffset(); i < metaObject.propertyCount(); i++) {
             QMetaProperty property = metaObject.property(i);//获取属性名称
             QVariant propertyValue = object->property(property.name());//获取属性
