@@ -4,7 +4,7 @@ QString DataBaseBean::hostName = "127.0.0.1";
 int DataBaseBean::port = 3306;
 QString DataBaseBean::dataBaseName = "database_achieve_class_design";
 QString DataBaseBean::user = "root";
-QString DataBaseBean::password = "lsy12345";
+QString DataBaseBean::password = "root";
 QSqlQuery *DataBaseBean::query = nullptr;
 
 QSqlQuery* DataBaseBean::getConnection() {
