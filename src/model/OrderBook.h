@@ -25,6 +25,10 @@ private:
 public:
     Q_INVOKABLE OrderBook(QObject *parent = nullptr) : QObject(parent) {}
 
+    ~OrderBook() override {
+        delete book;
+    }
+
     int getId() const {
         return id;
     }
