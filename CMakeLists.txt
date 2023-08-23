@@ -44,6 +44,8 @@ add_executable(BookMarket
         src/dao/OrderBookDao.h
         src/service/ProxyService.cpp
         src/service/ProxyService.h
+        src/service/OrderService.cpp
+        src/service/OrderService.h
 )
 target_link_libraries(BookMarket
         Qt::Core
